@@ -42,7 +42,7 @@ public class i5BibTexKey {
             case 3:
                 for (int i = 0; i < authors.size(); i++) {
                     Author author = authors.get(i);
-                    if (i == 0)
+                    if (i == 2)
                         bibtexKeyBuilder.append(author.getKeyPart(2));
                     else
                         bibtexKeyBuilder.append(author.getKeyPart(1));

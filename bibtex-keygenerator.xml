@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="bibtex-keygenerator" default="all">
+  
+  
+  <property file="bibtex-keygenerator.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="700m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.zip"/>
+    <include name="*.apk"/>
+    <include name="*.war"/>
+    <include name="*.egg"/>
+    <include name="*.ear"/>
+    <include name="*.ane"/>
+    <include name="*.swc"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+    <exclude name="**/?*.aj"/>
+  </patternset>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.args4j:args4j-maven-plugin-example:2.32.classpath">
+    <pathelement location="${basedir}/lib/args4j-2.32.jar"/>
+    <pathelement location="${basedir}/lib/args4j-maven-plugin-example-2.32.jar"/>
+  </path>
+  
+  <path id="library.org.jbibtex:jbibtex:1.0.14.classpath">
+    <pathelement location="${basedir}/lib/jbibtex-1.0.14.jar"/>
+  </path>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module i5BibTexConverter -->
+  
+  <dirname property="module.i5bibtexconverter.basedir" file="${ant.file}"/>
+  
+  
+  
+  <property name="compiler.args.i5bibtexconverter" value="-encoding windows-1252 -source 1.6 ${compiler.args}"/>
+  
+  <property name="i5bibtexconverter.output.dir" value="${module.i5bibtexconverter.basedir}/out/production/i5BibTexConverter"/>
+  <property name="i5bibtexconverter.testoutput.dir" value="${module.i5bibtexconverter.basedir}/out/test/i5BibTexConverter"/>
+  
+  <path id="i5bibtexconverter.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="i5bibtexconverter.module.production.classpath">
+    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+  </path>
+  
+  <path id="i5bibtexconverter.runtime.production.module.classpath">
+    <pathelement location="${i5bibtexconverter.output.dir}"/>
+    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+  </path>
+  
+  <path id="i5bibtexconverter.module.classpath">
+    <pathelement location="${i5bibtexconverter.output.dir}"/>
+    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+  </path>
+  
+  <path id="i5bibtexconverter.runtime.module.classpath">
+    <pathelement location="${i5bibtexconverter.testoutput.dir}"/>
+    <pathelement location="${i5bibtexconverter.output.dir}"/>
+    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.i5bibtexconverter">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.i5bibtexconverter">
+    <patternset refid="excluded.from.module.i5bibtexconverter"/>
+  </patternset>
+  
+  <path id="i5bibtexconverter.module.sourcepath">
+    <dirset dir="${module.i5bibtexconverter.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.i5bibtexconverter" depends="compile.module.i5bibtexconverter.production,compile.module.i5bibtexconverter.tests" description="Compile module i5BibTexConverter"/>
+  
+  <target name="compile.module.i5bibtexconverter.production" description="Compile module i5BibTexConverter; production classes">
+    <mkdir dir="${i5bibtexconverter.output.dir}"/>
+    <javac destdir="${i5bibtexconverter.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true">
+      <compilerarg line="${compiler.args.i5bibtexconverter}"/>
+      <bootclasspath refid="i5bibtexconverter.module.bootclasspath"/>
+      <classpath refid="i5bibtexconverter.module.production.classpath"/>
+      <src refid="i5bibtexconverter.module.sourcepath"/>
+      <patternset refid="excluded.from.compilation.i5bibtexconverter"/>
+    </javac>
+    
+    <copy todir="${i5bibtexconverter.output.dir}">
+      <fileset dir="${module.i5bibtexconverter.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.i5bibtexconverter.tests" depends="compile.module.i5bibtexconverter.production" description="compile module i5BibTexConverter; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.i5bibtexconverter" description="cleanup module">
+    <delete dir="${i5bibtexconverter.output.dir}"/>
+    <delete dir="${i5bibtexconverter.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.i5bibtexconverter" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.i5bibtexconverter" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.i5bibtexconverter:jar" value="${basedir}/out/artifacts/i5BibTexConverter_jar"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.i5BibTexConverter.jar" value="${artifacts.temp.dir}/i5BibTexConverter.jar"/>
+  </target>
+  
+  <target name="artifact.i5bibtexconverter:jar" depends="init.artifacts, compile.module.i5bibtexconverter" description="Build &#39;i5BibTexConverter:jar&#39; artifact">
+    <property name="artifact.temp.output.i5bibtexconverter:jar" value="${artifacts.temp.dir}/i5BibTexConverter_jar"/>
+    <mkdir dir="${artifact.temp.output.i5bibtexconverter:jar}"/>
+    <jar destfile="${temp.jar.path.i5BibTexConverter.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${i5bibtexconverter.output.dir}"/>
+      <zipfileset src="${basedir}/lib/args4j-maven-plugin-example-2.32.jar"/>
+      <zipfileset src="${basedir}/lib/args4j-2.32.jar"/>
+      <zipfileset src="${basedir}/lib/jbibtex-1.0.14.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.i5BibTexConverter.jar}" tofile="${artifact.temp.output.i5bibtexconverter:jar}/i5BibTexConverter.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.i5bibtexconverter:jar" description="Build all artifacts">
+    <mkdir dir="${artifact.output.i5bibtexconverter:jar}"/>
+    <copy todir="${artifact.output.i5bibtexconverter:jar}">
+      <fileset dir="${artifact.temp.output.i5bibtexconverter:jar}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>

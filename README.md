@@ -1,6 +1,6 @@
 # BibTeX-KeyGenerator
 
-The ACIS group at Chair of Computer Science 5 (Information Systems & Databases) uses a standardized scheme for BibTeX keys as part of its research literature management. BibTeX-KeyGenerator transforms a given BibTeX file with BibTeX keys incompliant to this scheme to a new BibTeX file with all keys compliant to the ACIS scheme.
+The ACIS group at Chair of Computer Science 5 (Information Systems & Databases) uses a standardized scheme for BibTeX keys as part of its research literature management. BibTeX-KeyGenerator transforms a given BibTeX file with BibTeX keys incompliant to this scheme to a new BibTeX file with all keys compliant to the ACIS scheme. Furthermore, BibTeX-KeyGenerator transforms all author names to the standard format <lastname>, <firstnames>. At the same time, the tool executes a couple of BibTeX quality checks and provides directions for improvement for all entries in the passed BibTeX file. Quality checks include abbreviated author names as well as missing fields like abstract, url, and keywords.
 
 ## Scheme
 
@@ -19,13 +19,15 @@ The scheme defines a 6-char sequence of the form `NNNNYY`, where
   - for multiple last names, use the first one only (Ortiz-Ruiz, 2013 -> `Orti13`)
 
 ## Usage
-Open a console window and user the following command to generate correct bibtex keys into the out.txt file
+Open a console window and use the following command to transform a given BibTeX file in.bib into a curated BibTeX file out.bib:
 ```console
-java -jar i5BibTexConverter.jar -i "C:\PathToYourReferences\papers.bib" -o .\out.txt
+java -jar i5BibTexConverter.jar -i /path/to/in.bib -o /path/to/out.bib
 ```
 
+Quality issues per BibTeX entry are reported on stdout, including suggestions for improvement. These issues should be processed in the generated BibTeX file. 
+
 ##Build
-First of all you can easily open the source in intellij and set up things there and just edit the source.
+First of all you can easily open the source in intellij, set up things there and just edit the source.
 But there is also a way to build to jar file using ant script, just need to do 2 steps:
 
  1. Set up your maven repository in the bibtex-keygenerator.properties file

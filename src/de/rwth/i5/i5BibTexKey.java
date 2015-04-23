@@ -25,6 +25,19 @@ public class i5BibTexKey {
         String generatedKey = generate(authors, year);
         return generatedKey;
     }
+    
+    public static String reformatAuthors(String authorsString){
+        
+        List<Author> authors = splitToAuthorsFull(authorsString);
+        
+        String result = "";
+        for(Author a : authors){
+        	result += a.getFamilyName() + ", " + a.getGivenName() + " and ";
+        }
+        
+        result = result.substring(0, result.length() - 5).trim();
+        return result;
+    }
 
     private static String generate(List<Author> authors, String year) {
 
@@ -46,6 +59,11 @@ public class i5BibTexKey {
                         bibtexKeyBuilder.append(author.getKeyPart(2));
                     else
                         bibtexKeyBuilder.append(author.getKeyPart(1));
+                }
+                break;
+			case 4:
+                for (Author author : authors) {
+                    bibtexKeyBuilder.append(author.getKeyPart(1));
                 }
                 break;
             default:
@@ -90,6 +108,43 @@ public class i5BibTexKey {
             authorList.add(author);
         }
         return authorList;
+    }
+    
+    private static List<Author> splitToAuthorsFull(String escapedAuthor) {
+        List<Author> authorList = new ArrayList<Author>();
+        for (String authorString : escapedAuthor.split(" and")) {
+            authorString = authorString.trim();
+            Author author = new Author();
+            if (authorString.contains(",")) {
+                String[] authorNameParts = authorString.split(",");
+                author.setFamilyName(authorNameParts[0].trim());
+                author.setGivenName(authorNameParts[1].trim());
+            } else {
+            	
+                String[] authorNameParts = authorString.split(" ");
+                String givenNamePart = "";
+                for(int i=0;i<authorNameParts.length-1;i++){
+                	givenNamePart += authorNameParts[i].trim() + " ";
+                }
+                author.setGivenName(givenNamePart.trim());
+                
+                author.setFamilyName(authorNameParts[authorNameParts.length-1]);
+            }
+            
+            authorList.add(author);
+        }
+        return authorList;
+    }
+    
+    public static boolean isAuthorFirstNameAbbreviated(String authors){
+    	List<Author> alist = splitToAuthorsFull(authors);
+    	for(Author a: alist){
+    		 if(a.getGivenName().contains(".") && !a.getGivenName().contains(" ")){
+             	System.out.println(a.getFamilyName() + ": " + a.getGivenName());
+             	return true;
+    		 }
+    	}
+    	return false;
     }
 
     private static Map<String, String> getNamePartsToEscape(String authors) {

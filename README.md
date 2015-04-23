@@ -11,11 +11,12 @@ The scheme defines a 6-char sequence of the form `NNNNYY`, where
 - `NNNN` - abbreviations of authors' last names
 
   - 1 author: max first 4 letters of lastname (Li 2015 -> `Li15`; Renzel, 2015 -> `Renz15`)
-	 - 2 authors: first two letters of both last names (Klamma & Renzel, 2015 -> `KlRe15`)
-	 - 3 authors: first letters of first two authors' last names, first two letters of last author's last name (Nicolaescu, Toubekis, Klamma, 2015 -> `NTKl15`)
-	 - 4 authors: first letters of authors' last names (Koren, Nicolaescu, Renzel, Klamma, 2015 -> `KNRK15`)
-	 - >4 authors: first letters of first three authors' last names, followed by an asterisk (Koren, Nicolaescu, Shahriari, Renzel, Klamma, 2015 -> `KNS*15`)
-	 - neglect last name prefixes like "de", "van", etc. (van der Aalst, 2014 -> `Aals14`; de Lange, 2014 -> `Lang14`)
+  - 2 authors: first two letters of both last names (Klamma & Renzel, 2015 -> `KlRe15`)
+  - 3 authors: first letters of first two authors' last names, first two letters of last author's last name (Nicolaescu, Toubekis, Klamma, 2015 -> `NTKl15`)
+  - 4 authors: first letters of authors' last names (Koren, Nicolaescu, Renzel, Klamma, 2015 -> `KNRK15`)
+  - >4 authors: first letters of first three authors' last names, followed by an asterisk (Koren, Nicolaescu, Shahriari, Renzel, Klamma, 2015 -> `KNS*15`)
+  - neglect last name prefixes like "de", "van", etc. (van der Aalst, 2014 -> `Aals14`; de Lange, 2014 -> `Lang14`)
+  - for multiple last names, use the first one only (Ortiz-Ruiz, 2013 -> `Orti13`)
 
 ## Usage
 Open a console window and user the following command to generate correct bibtex keys into the out.txt file

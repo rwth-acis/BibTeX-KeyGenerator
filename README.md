@@ -6,7 +6,7 @@ The ACIS group at Chair of Computer Science 5 (Information Systems & Databases) 
 
 The scheme defines a 6-char sequence of the form `NNNNYY`, where 
 
-- `YY` - year of publication (e.g. `15` for 2015; `77` for 1977)
+- `YY` - year of publication (`15` for 2015; `77` for 1977)
 
 - `NNNN` - abbreviations of authors' last names
 

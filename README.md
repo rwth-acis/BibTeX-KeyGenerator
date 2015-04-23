@@ -2,6 +2,21 @@
 
 The ACIS group at Chair of Computer Science 5 (Information Systems & Databases) uses a standardized scheme for BibTeX keys as part of its research literature management. BibTeX-KeyGenerator transforms a given BibTeX file with BibTeX keys incompliant to this scheme to a new BibTeX file with all keys compliant to the ACIS scheme.
 
+## Scheme
+
+The scheme defines a 6-char sequence of the form `NNNNYY`, where 
+
+- `YY` - year of publication (e.g. `15` for 2015; `77` for 1977)
+
+- `NNNN` - abbreviations of authors' last names
+
+  - 1 author: max first 4 letters of lastname (Li 2015 -> `Li15`; Renzel, 2015 -> `Renz15`)
+	 - 2 authors: first two letters of both last names (Klamma & Renzel, 2015 -> `KlRe15`)
+	 - 3 authors: first letters of first two authors' last names, first two letters of last author's last name (Nicolaescu, Toubekis, Klamma, 2015 -> `NTKl15`)
+	 - 4 authors: first letters of authors' last names (Koren, Nicolaescu, Renzel, Klamma, 2015 -> `KNRK15`)
+	 - >4 authors: first letters of first three authors' last names, followed by an asterisk (Koren, Nicolaescu, Shahriari, Renzel, Klamma, 2015 -> `KNS*15`)
+	 - neglect last name prefixes like "de", "van", etc. (van der Aalst, 2014 -> `Aals14`; de Lange, 2014 -> `Lang14`)
+
 ## Usage
 Open a console window and user the following command to generate correct bibtex keys into the out.txt file
 ```console

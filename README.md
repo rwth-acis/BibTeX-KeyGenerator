@@ -21,10 +21,16 @@ The scheme defines a 6-char sequence of the form `NNNNYY`, where
 ## Usage
 Open a console window and use the following command to transform a given BibTeX file in.bib into a curated BibTeX file out.bib:
 ```console
-java -jar i5BibTexConverter.jar -i /path/to/in.bib -o /path/to/out.bib
+java -jar i5BibTexConverter.jar -m regeneratekeys -i /path/to/in.bib -o /path/to/out.bib
 ```
 
 Quality issues per BibTeX entry are reported on stdout, including suggestions for improvement. These issues should be processed in the generated BibTeX file. 
+
+To copy PDFs with a a name starting in the Format "[BibT15]" where "BibT15" is the BibTeX key from one folder to another, if there is a matching BibTeX key
+ in the BibTeX file, run the following command:
+```console
+java -jar i5BibTexConverter.jar -m matchpdfs -i /path/to/in.bib -pi /path/to/input/pdfs -po /path/to/output/pdfs
+```
 
 ##Build
 First of all you can easily open the source in intellij, set up things there and just edit the source.

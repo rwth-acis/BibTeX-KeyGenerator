@@ -1,5 +1,6 @@
 package de.rwth.i5;
 
+import org.apache.commons.io.FileUtils;
 import org.jbibtex.*;
 import org.kohsuke.args4j.CmdLineException;
 import org.kohsuke.args4j.CmdLineParser;
@@ -129,18 +130,27 @@ public class Main {
             } else if (method.equals("matchpdfs")) {
                 // we do matching PDFs with bibtex keys
 
-                Map<Key, BibTeXEntry> bibEntriesWithPDF = new HashMap<Key, BibTeXEntry>();
+                FileWriter sqlFile = new FileWriter("output.sql");
+                String newLine = System.getProperty("line.separator");
 
                 for (BibTeXObject bibTeXObject : bibTeXDatabase.getObjects()) {
                     BibTeXEntry bibTeXEntry = (BibTeXEntry) bibTeXObject;
-                    String bibKey = bibTeXEntry.getKey().toString();
+                    //TODO: the * symbol seems to be not accepted by jbibtex at this time.
+                    String bibKey = bibTeXEntry.getKey().toString().replaceAll("\\*", "+");
 
                     File[] pdfFiles = pdfsInputPath.listFiles(new ACISBibKeyFilenameFilter(bibKey));
                     if (pdfFiles.length != 0) {
                         // copy file to new directory
-                        copyFile(pdfFiles[0], new File(pdfsOutputPath.getPath() + "/" + pdfFiles[0].getName()));
+                        FileUtils.copyFile(pdfFiles[0], new File(pdfsOutputPath.getPath() + "/" + pdfFiles[0].getName()));
+
+                        // write info into file
+                        //BibTeX Key; Paper Titel; Jahr;
+                        sqlFile.write("INSERT INTO literature ('bibtexkey', 'title', 'year') VALUES ('" + bibKey + "', '" + bibTeXEntry.getField(BibTeXEntry.KEY_TITLE).toUserString() + "', '" + bibTeXEntry.getField(BibTeXEntry.KEY_YEAR).toUserString() + "');" + newLine);
                     }
                 }
+
+                // close that file
+                sqlFile.close();
 
             } else {
                 // great, nothing to do
@@ -151,40 +161,6 @@ public class Main {
             System.err.println("Problem at conversion, please try some other!");
             e.printStackTrace();
             System.exit(-1);
-        }
-    }
-
-    /**
-     * Copies a file over. Is this really the simplest way? See here:
-     * http://stackoverflow.com/questions/106770/standard-concise-way-to-copy-a-file-in-java
-     *
-     * @param sourceFile
-     * @param destFile
-     * @throws IOException
-     */
-    public static void copyFile(File sourceFile, File destFile) throws IOException {
-        System.out.println(sourceFile.getAbsolutePath());
-        System.out.println ("hey");
-        System.out.println(destFile.getAbsolutePath());
-        System.out.println("---");
-        if (!destFile.exists()) {
-            destFile.createNewFile();
-        }
-
-        FileChannel source = null;
-        FileChannel destination = null;
-
-        try {
-            source = new FileInputStream(sourceFile).getChannel();
-            destination = new FileOutputStream(destFile).getChannel();
-            destination.transferFrom(source, 0, source.size());
-        } finally {
-            if (source != null) {
-                source.close();
-            }
-            if (destination != null) {
-                destination.close();
-            }
         }
     }
 

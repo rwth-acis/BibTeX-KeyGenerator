@@ -17,7 +17,7 @@ The scheme defines a 6-char sequence of the form `NNNNYY`, where
   - >4 authors: first letters of first three authors' last names, followed by an asterisk (Koren, Nicolaescu, Shahriari, Renzel, Klamma, 2015 -> `KNS*15`)
   - neglect last name prefixes like "de", "van", etc. (van der Aalst, 2014 -> `Aals14`; de Lange, 2014 -> `Lang14`)
   - for multiple last names, use the first one only (Ortiz-Ruiz, 2013 -> `Orti13`)
-  - in case of conflicts use alphabetic modifiers (Derntl, Erdtmann, Renzel, Nicolaescu, 2014 -> DERN14, Derntl 2014 -> Dern2014, conflict since Bibtex is not case sensitive, DERN15, Dern15b) 
+  - in case of conflicts use alphabetic modifiers (Derntl, Erdtmann, Renzel, Nicolaescu, 2014 -> `DERN14`, Derntl 2014 -> `Dern2014`, conflict since BibTeX is not case sensitive, `DERN14`, `Dern14b`)(conflict resolution NYI...) 
 
 ## Usage
 Open a console window and use the following command to transform a given BibTeX file in.bib into a curated BibTeX file out.bib:

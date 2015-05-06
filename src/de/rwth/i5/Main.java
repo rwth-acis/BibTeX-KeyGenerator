@@ -64,6 +64,7 @@ public class Main {
                 for (BibTeXObject bibTeXObject : bibTeXDatabase.getObjects()) {
                     try {
                         BibTeXEntry bibTeXEntry = (BibTeXEntry) bibTeXObject;
+                        System.out.println(bibTeXEntry.getKey().toString());
                         String newKey = i5BibTexKey.generate(bibTeXEntry);
                         BibTeXEntry modifiedEntry = new BibTeXEntry(bibTeXEntry.getType(), new Key(newKey));
 

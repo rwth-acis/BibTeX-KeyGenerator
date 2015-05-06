@@ -64,8 +64,12 @@
     <pathelement location="${basedir}/lib/args4j-maven-plugin-example-2.32.jar"/>
   </path>
   
-  <path id="library.org.jbibtex:jbibtex:1.0.14.classpath">
-    <pathelement location="${basedir}/lib/jbibtex-1.0.14.jar"/>
+  <path id="library.org.jbibtex:jbibtex:1.0.15.classpath">
+    <pathelement location="${basedir}/lib/jbibtex-1.0.15.jar"/>
+  </path>
+
+  <path id="library.org.apache.commons.io:io:2.4.classpath">
+    <pathelement location="${basedir}/lib/commons-io-2.4.jar"/>
   </path>
   
   <!-- Modules -->
@@ -87,27 +91,31 @@
   </path>
   
   <path id="i5bibtexconverter.module.production.classpath">
-    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.org.jbibtex:jbibtex:1.0.15.classpath"/>
     <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+    <path refid="library.org.apache.commons.io:io:2.4.classpath"/>
   </path>
   
   <path id="i5bibtexconverter.runtime.production.module.classpath">
     <pathelement location="${i5bibtexconverter.output.dir}"/>
-    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.org.jbibtex:jbibtex:1.0.15.classpath"/>
     <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+    <path refid="library.org.apache.commons.io:io:2.4.classpath"/>
   </path>
   
   <path id="i5bibtexconverter.module.classpath">
     <pathelement location="${i5bibtexconverter.output.dir}"/>
-    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.org.jbibtex:jbibtex:1.0.15.classpath"/>
     <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+    <path refid="library.org.apache.commons.io:io:2.4.classpath"/>
   </path>
   
   <path id="i5bibtexconverter.runtime.module.classpath">
     <pathelement location="${i5bibtexconverter.testoutput.dir}"/>
     <pathelement location="${i5bibtexconverter.output.dir}"/>
-    <path refid="library.org.jbibtex:jbibtex:1.0.14.classpath"/>
+    <path refid="library.org.jbibtex:jbibtex:1.0.15.classpath"/>
     <path refid="library.args4j:args4j-maven-plugin-example:2.32.classpath"/>
+    <path refid="library.org.apache.commons.io:io:2.4.classpath"/>
   </path>
   
   
@@ -175,7 +183,8 @@
       <zipfileset dir="${i5bibtexconverter.output.dir}"/>
       <zipfileset src="${basedir}/lib/args4j-maven-plugin-example-2.32.jar"/>
       <zipfileset src="${basedir}/lib/args4j-2.32.jar"/>
-      <zipfileset src="${basedir}/lib/jbibtex-1.0.14.jar"/>
+      <zipfileset src="${basedir}/lib/jbibtex-1.0.15.jar"/>
+      <zipfileset src="${basedir}/lib/commons-io-2.4.jar"/>
     </jar>
     <copy file="${temp.jar.path.i5BibTexConverter.jar}" tofile="${artifact.temp.output.i5bibtexconverter:jar}/i5BibTexConverter.jar"/>
   </target>

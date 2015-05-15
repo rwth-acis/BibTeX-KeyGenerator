@@ -139,12 +139,14 @@ public class Main {
 
                 for (BibTeXObject bibTeXObject : bibTeXDatabase.getObjects()) {
                     BibTeXEntry bibTeXEntry = (BibTeXEntry) bibTeXObject;
-                    String bibKey = bibTeXEntry.getKey().toString();
+                    String bibKeyOfFile = bibTeXEntry.getKey().toString().replaceAll("\\*", "+");
 
-                    File[] pdfFiles = pdfsInputPath.listFiles(new ACISBibKeyFilenameFilter(bibKey));
+                    File[] pdfFiles = pdfsInputPath.listFiles(new ACISBibKeyFilenameFilter(bibKeyOfFile));
                     if (pdfFiles.length != 0) {
                         String title = bibTeXEntry.getField(BibTeXEntry.KEY_TITLE).toUserString().replaceAll("'", "");
                         String year = bibTeXEntry.getField(BibTeXEntry.KEY_YEAR).toUserString();
+                        String bibKey = bibTeXEntry.getKey().toString();
+
                         // copy file to new directory
                         FileUtils.copyFile(pdfFiles[0], new File(pdfsOutputPath.getPath() + "/" + pdfFiles[0].getName()));
 
@@ -165,12 +167,13 @@ public class Main {
 
                 for (BibTeXObject bibTeXObject : bibTeXDatabase.getObjects()) {
                     BibTeXEntry bibTeXEntry = (BibTeXEntry) bibTeXObject;
-                    String bibKey = bibTeXEntry.getKey().toString();
+                    String bibKeyOfFile = bibTeXEntry.getKey().toString().replaceAll("\\*", "+");
 
-                    File[] fulltextFiles = fulltextsInputPath.listFiles(new ACISBibKeyFilenameFilter(bibKey));
+                    File[] fulltextFiles = fulltextsInputPath.listFiles(new ACISBibKeyFilenameFilter(bibKeyOfFile));
                     if (fulltextFiles.length != 0) {
                         String title = bibTeXEntry.getField(BibTeXEntry.KEY_TITLE).toUserString().replaceAll("'", "");
                         String year = bibTeXEntry.getField(BibTeXEntry.KEY_YEAR).toUserString();
+                        String bibKey = bibTeXEntry.getKey().toString();
 						
                         // read out file content
                         String fulltext = FileUtils.readFileToString(new File(fulltextsInputPath.getPath() + "/" + fulltextFiles[0].getName()));

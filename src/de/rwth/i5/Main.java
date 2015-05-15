@@ -171,12 +171,15 @@ public class Main {
                     if (fulltextFiles.length != 0) {
                         String title = bibTeXEntry.getField(BibTeXEntry.KEY_TITLE).toUserString().replaceAll("'", "");
                         String year = bibTeXEntry.getField(BibTeXEntry.KEY_YEAR).toUserString();
+						
                         // read out file content
                         String fulltext = FileUtils.readFileToString(new File(fulltextsInputPath.getPath() + "/" + fulltextFiles[0].getName()));
 
                         // write info into file
                         //BibTeX Key; Paper Titel; Jahr; Fulltext
-                        sqlFile.write("INSERT INTO literature ('bibtexkey', 'title', 'year', 'fulltext') VALUES ('" + bibKey + "', '" + title + "', '" + year + "', '" + fulltext + "');" + newLine);
+                        //sqlFile.write("INSERT INTO literature ('bibtexkey', 'title', 'year', 'fulltext') VALUES ('" + bibKey + "', '" + title + "', '" + year + "', '" + fulltext + "');" + newLine);
+						
+						sqlFile.write("INSERT INTO literature (bibtexkey, title, year, ptext) VALUES ('" + bibKey + "', '" + title + "', " + year + ", '" + fulltext + "');" + newLine);
                     }
                 }
 

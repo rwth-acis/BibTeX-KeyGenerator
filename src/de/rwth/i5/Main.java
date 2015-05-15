@@ -30,6 +30,9 @@ public class Main {
     @Option(name = "-po", required = false, usage = "PDFs output path", metaVar = "PDFSOUTPUT")
     private File pdfsOutputPath = new File(".");
 
+    @Option(name = "-fi", required = false, usage = "Fulltexts input path", metaVar = "FULLTEXTSINPUT")
+    private File fulltextsInputPath = new File(".");
+
     private BibTeXDatabase bibTeXDatabase;
 
     public static void main(String[] args) {
@@ -136,23 +139,49 @@ public class Main {
 
                 for (BibTeXObject bibTeXObject : bibTeXDatabase.getObjects()) {
                     BibTeXEntry bibTeXEntry = (BibTeXEntry) bibTeXObject;
-                    //TODO: the * symbol seems to be not accepted by jbibtex at this time.
-                    String bibKey = bibTeXEntry.getKey().toString().replaceAll("\\*", "+");
+                    String bibKey = bibTeXEntry.getKey().toString();
 
                     File[] pdfFiles = pdfsInputPath.listFiles(new ACISBibKeyFilenameFilter(bibKey));
                     if (pdfFiles.length != 0) {
+                        String title = bibTeXEntry.getField(BibTeXEntry.KEY_TITLE).toUserString().replaceAll("'", "");
+                        String year = bibTeXEntry.getField(BibTeXEntry.KEY_YEAR).toUserString();
                         // copy file to new directory
                         FileUtils.copyFile(pdfFiles[0], new File(pdfsOutputPath.getPath() + "/" + pdfFiles[0].getName()));
 
                         // write info into file
                         //BibTeX Key; Paper Titel; Jahr;
-                        sqlFile.write("INSERT INTO literature ('bibtexkey', 'title', 'year') VALUES ('" + bibKey + "', '" + bibTeXEntry.getField(BibTeXEntry.KEY_TITLE).toUserString() + "', '" + bibTeXEntry.getField(BibTeXEntry.KEY_YEAR).toUserString() + "');" + newLine);
+                        sqlFile.write("INSERT INTO literature ('bibtexkey', 'title', 'year') VALUES ('" + bibKey + "', '" + title + "', '" + year + "');" + newLine);
                     }
                 }
 
                 // close that file
                 sqlFile.close();
 
+            } else if (method.equals("readfulltexts")) {
+                // we do reading in fulltexts from PDFs
+
+                FileWriter sqlFile = new FileWriter("output.sql");
+                String newLine = System.getProperty("line.separator");
+
+                for (BibTeXObject bibTeXObject : bibTeXDatabase.getObjects()) {
+                    BibTeXEntry bibTeXEntry = (BibTeXEntry) bibTeXObject;
+                    String bibKey = bibTeXEntry.getKey().toString();
+
+                    File[] fulltextFiles = fulltextsInputPath.listFiles(new ACISBibKeyFilenameFilter(bibKey));
+                    if (fulltextFiles.length != 0) {
+                        String title = bibTeXEntry.getField(BibTeXEntry.KEY_TITLE).toUserString().replaceAll("'", "");
+                        String year = bibTeXEntry.getField(BibTeXEntry.KEY_YEAR).toUserString();
+                        // read out file content
+                        String fulltext = FileUtils.readFileToString(new File(fulltextsInputPath.getPath() + "/" + fulltextFiles[0].getName()));
+
+                        // write info into file
+                        //BibTeX Key; Paper Titel; Jahr; Fulltext
+                        sqlFile.write("INSERT INTO literature ('bibtexkey', 'title', 'year', 'fulltext') VALUES ('" + bibKey + "', '" + title + "', '" + year + "', '" + fulltext + "');" + newLine);
+                    }
+                }
+
+                // close that file
+                sqlFile.close();
             } else {
                 // great, nothing to do
             }

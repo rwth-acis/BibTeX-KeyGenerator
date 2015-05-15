@@ -33,6 +33,11 @@ To copy PDFs with a a name starting in the Format "[BibT15]" where "BibT15" is t
 java -jar i5BibTexConverter.jar -m matchpdfs -i /path/to/in.bib -pi /path/to/input/pdfs -po /path/to/output/pdfs
 ```
 
+To include fulltexts in the output.sql, use the method `readfulltexts` and supply the textfile input path as in the following command:
+```console
+java -jar i5BibTexConverter.jar -m readfulltexts -i /path/to/in.bib -fi /path/to/input/textfiles
+```
+
 ##Build
 First of all you can easily open the source in intellij, set up things there and just edit the source.
 But there is also a way to build to jar file using ant script, just need to do 2 steps:
